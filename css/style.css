@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+* {
+  margin: 0;
+}
+:root {
+  --nord0: #2e3440;
+  --nord1: #3b4252;
+  --nord2: #434c5e;
+  --nord3: #4c566a;
+  --nord4: #d8dee9;
+  --nord5: #e5e9f0;
+  --nord6: #eceff4;
+  --nord7: #8fbcbb;
+  --nord9: #81a1c1;
+  --nord10: #5e81ac;
+  --nord11: #bf616a;
+  --nord12: #d08770;
+  --nord13: #ebcb8b;
+  --nord14: #a3be8c;
+  --nord15: #b48ead;
+
+  --bg-color-default: var(--nord5);
+  --fn1-color-default: var(--nord0);
+  --fn2-color-default: var(--nord1);
+  --border-color: rgba(76, 86, 106, 0.2); /*nord3*/
+  --border-color-default: var(--border-color);
+  --border-color-2: var(--nord5);
+  --border-color-3: var(--nord2);
+  --border-size: clamp(0em, 0.1vw, 0.2em);
+  --cell-pading-size: clamp(0em, 0.1vw, 0.2em);
+  --border: var(--border-size) solid var(--border-color-default);
+  --bottom-color-defalut: var(--border-color-default);
+  --error-color-default: var(--nord11);
+  --main-card-color-default: var(--nord3);
+  --ok-color-default: var(--nord14);
+}
+body {
+  display: flex;
+  justify-content: center;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+}
+.canvas {
+  difplay: flex;
+  font-family: Inter;
+  padding: 2rem;
+  width: 400px;
+  min-height: 100vh;
+  background: var(--nord4);
+  border: var(--border);
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  color: var(--nord3);
+  background: var(--nord6);
+  border: var(--border);
+  padding: 2em;
+  border-radius: 0.5em;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card header {
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  opacity: 0.3;
+  padding-bottom: 1em;
+}
+
+.card .question {
+  display: flex;
+  padding-bottom: 2em;
+  padding-top: 2em;
+  justify-content: center;
+  border-top: var(--border);
+  border-bottom: var(--border);
+  border-opacity: 0.3;
+}
+
+.card .question .value {
+  font-size: 6em;
+  opacity: 0.3;
+}
+
+.card .question .power {
+  font-size: 3em;
+}
+
+.card .result {
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+  padding-top: 0em;
+  border-bottom: var(--border);
+}
+
+.card .answer {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  justify-content: right;
+  padding-bottom: 2em;
+  padding-top: 2em;
+  border-bottom: var(--border);
+}
+
+.card .answer input {
+  background: 0;
+  border: 0;
+  font-size: 3em;
+  color: var(--nord3);
+  width: 100%;
+  outline: none;
+  text-align: center;
+  transition: padding 0.3s 0.2s ease;
+}
+.card .answer input::placeholder {
+  opacity: 0.5;
+  font-size: 0.5em;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.card .answer input:focus {
+  padding-bottom: 5px;
+}
+
+.card .answer input[type="number"]::-webkit-inner-spin-button,
+.card .answer input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.card .answer input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.card .answer .line {
+  margin-top: 0.5em;
+  width: 100%;
+  height: 0.2em;
+  background: var(--main-card-color-default);
+}
+
+.card footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 2em;
+}
+
+.card footer .action {
+  border: 0;
+}
+.card footer .action svg {
+  width: 5em;
+  fill: var(--bottom-color-defalut);
+}
+.card footer .action svg:hover {
+  fill: var(--nord3);
+  cursor:pointer;
+}
+.card footer .action .reload {
+  width: 5em;
+  display:none;
+} 
