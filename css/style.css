@@ -31,7 +31,7 @@
   --bottom-color-defalut: var(--border-color-default);
   --error-color-default: var(--nord12);
   --main-card-color-default: var(--nord3);
-  --ok-color-default: var(--nord14);
+  --success-color-default: var(--nord14);
   --menu-icon-hover-bg: var(--border-color);
 }
 body {
@@ -131,9 +131,8 @@ a:active {
 }
 
 .app-footer {
-  display: grid;
+  display: flex;
   color: var(--nord3);
-  grid-template-columns: repeat(1, auto);
   justify-content: center;
   font-size: 0.8em;
   padding: 1em;
@@ -191,13 +190,22 @@ a:active {
   border-opacity: 0.3;
 }
 
-.card .question .value {
+#powerOf2.card .queston-base {
   font-size: 6em;
   opacity: 0.3;
 }
 
-.card .question .power {
+.card .question-value {
   font-size: 3em;
+}
+
+#hexToBin.card .question-prefix {
+  opacity: 0.3;
+  font-size: 3em;
+}
+
+#hexToBin.card .result span span:nth-child(4) {
+  padding-right: 1rem;
 }
 
 .card .result {
@@ -227,6 +235,12 @@ a:active {
   text-align: center;
   transition: padding 0.3s 0.2s ease;
 }
+.card .answer input.error {
+  color: var(--error-color-default);
+}
+.card .answer input.success {
+  color: var(--success-color-default);
+}
 .card .answer input::placeholder {
   opacity: 0.5;
   font-size: 0.5em;
@@ -254,7 +268,12 @@ a:active {
   height: 0.2em;
   background: var(--main-card-color-default);
 }
-
+.card .answer .line.error {
+  background-color: var(--error-color-default);
+}
+.card .answer .line.success {
+  background-color: var(--success-color-default);
+}
 .card footer {
   display: flex;
   justify-content: center;
