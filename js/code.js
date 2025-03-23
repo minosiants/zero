@@ -58,6 +58,19 @@ const $$ = (d) => {
         ? setHeight(height, ...elements)
         : setHeight("0px", ...elements),
     );
+  const hasClass = (clazz, e) =>
+    e.className.split(" ").find((c) => c === clazz) !== undefined;
+
+  const addClass = (clazz, ...elements) =>
+    elements.forEach((e) => {
+      if (!hasClass(clazz, e)) e.classList.add(clazz);
+    });
+
+  const removeClass = (clazz, ...elements) =>
+    elements.forEach((e) => {
+      if (hasClass(clazz, e)) e.classList.remove(clazz);
+    });
+
   return {
     doc: d,
     element: element,
@@ -71,80 +84,145 @@ const $$ = (d) => {
     toggelShow: toggelShow,
     setHeight: setHeight,
     toggleHeight: toggleHeight,
+    addClass: addClass,
+    removeClass: removeClass,
   };
 };
-const powerOf2 = ($) => {
-  const cardId = "#powerOf2";
+
+const $card = ($, card) => {
+  const cardId = card.id;
   const $navigation = $.element(".app-menu-slider");
   const $answerInput = $.element(cardId, ".answer input");
   const $answerLine = $.element(cardId, ".answer .line");
-  const $power = $.element(cardId, ".question .power");
+  const $questionValue = $.element(cardId, ".question-value");
   const $result = $.element(cardId, ".result span");
   const $reloadBtn = $.element(cardId, ".action .reload");
   const $submitBtn = $.element(cardId, ".action .submit");
-  const errorColor = $.cssVar("--error-color-default");
-  const okColor = $.cssVar("--ok-color-default");
   const mainColor = $.cssVar("--main-card-color-default");
 
-  const power = () => Number($power.textContent);
-
-  const random = (max = 20) => Math.floor(Math.random() * max);
-  const fconst = (v1) => (v2) => v1;
-  const check = (answer, power) => {
-    const v = 2 ** power;
-    return [v, v === answer];
-  };
+  const questionValue = () => $questonValue.textContent;
   const showResult = (result) => {
-    $result.textContent = result;
-    //$.show($result);
+    const v = result
+      .toString()
+      .split("")
+      .map((v) => `<span>${v}</span>`)
+      .join("");
+    console.log(v);
+    $result.innerHTML = v;
   };
-  const showError = () => $.setBgColor(errorColor, $answerLine);
-  const clearError = () => $.setBgColor(mainColor, $answerLine);
+
+  const showError = () => {
+    $.addClass("error", $answerInput, $answerLine);
+  };
+  const clearError = () => {
+    $.removeClass("error", $answerInput, $answerLine);
+  };
+
   const showSubmit = () => {
     $.hide($reloadBtn);
     $.show($submitBtn);
   };
-  const showAnswerOk = () => $.setBgColor(okColor, $answerLine);
+
+  const showSuccess = () => {
+    $.addClass("success", $answerInput, $answerLine);
+  };
+  const clearSuccess = () => {
+    $.removeClass("success", $answerInput, $answerLine);
+  };
 
   const showReload = () => {
     $.hide($submitBtn);
     $.show($reloadBtn);
   };
-  const reload = (power) => {
-    $power.textContent = power;
+
+  const reload = (newValue) => {
+    $questionValue.textContent = newValue;
     $result.textContent = "";
     $answerInput.value = "";
     clearError();
+    clearSuccess();
     showSubmit();
   };
   $.onInput(cardId, ".answer .line", (e) => clearError(e));
 
   $.onClick(cardId, "footer .action .submit", (e) => {
     e.stopPropagation();
-    const answer = Number($answerInput.value);
-    if ($answerInput.value === "" || isNaN(answer)) {
+    const answer = $answerInput.value;
+    if (answer === "" || !card.valid(answer)) {
       showError();
     }
-    const [result, isOk] = check(answer, power());
+    const [result, isOk] = card.check($questionValue.textContent, answer);
     if (!isOk) {
       showResult(result);
       showError();
       showReload();
       return;
     }
-    showAnswerOk();
+    showSuccess();
     showReload();
   });
   $.onClick(cardId, "footer .action .reload", (e) => {
     e.stopPropagation();
-    reload(random(10));
+    reload(card.generate());
   });
 
   $.onClick(".app-menu-hamburger-icon", () =>
     $.toggleHeight("100vh", $navigation),
   );
+
+  reload(card.generate());
 };
+
+const power = () => {
+  const id = "#powerOf2";
+  const check = (question, answer) => {
+    const expected = 2 ** question;
+    return [expected, expected === Number(answer)];
+  };
+  const valid = (value) => {
+    const answer = Number(value);
+    return !isNaN(answer);
+  };
+  const generate = (max = 10) => Math.floor(Math.random() * max);
+
+  return {
+    id: id,
+    valid: valid,
+    check: check,
+    generate: generate,
+  };
+};
+
+const hexToBin = () => {
+  const id = "#hex";
+
+  const check = (question, answer) => {
+    const q = Number.parseInt(question, 16);
+    const a = Number.parseInt(answer, 2);
+    return [Number(q).toString(2).padStart(8, "0"), q === a];
+  };
+
+  const valid = (value) => {
+    const answer = Number(value);
+    return !isNaN(answer);
+  };
+  const generate = (max = 256) => {
+    const num = Math.floor(Math.random() * max);
+    return num.toString(16);
+  };
+
+  return {
+    id: id,
+    valid: valid,
+    check: check,
+    generate: generate,
+  };
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const $ = $$(document);
-  const $powerOf2 = powerOf2($);
+  const pageId = $.element("body").id;
+
+  if (pageId === "power") $card($, power());
+  else if (pageId === "hex") $card($, hexToBin());
 });
