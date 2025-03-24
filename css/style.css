@@ -36,6 +36,9 @@
 }
 body {
   color: var(--nord3);
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(242, 244, 248);
 }
 * {
   margin: 0;
@@ -53,20 +56,23 @@ a:active {
 }
 
 .canvas {
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-family: Rubik;
   padding: 0 2rem;
-  height: 100vh;
   min-width: 350px;
   background-color: rgb(242, 244, 248);
-  border: var(--border);
 }
-main{
-  /* height: 100vh; */
+main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .content-pusher {
-  height: 6em;
+  height: 6rem;
 }
 .app-header {
   display: flex;
@@ -88,7 +94,7 @@ main{
   width: 100%;
 }
 .app-menu-hamburger {
-    display:none;
+  display: none;
 }
 
 .app-menu-hamburger-icon {
@@ -125,16 +131,28 @@ main{
   background: white;
 }
 .app-menu-horizontal {
-  
+  display: none;
+  font-size: 1.2rem;
 }
 .app-menu-horizontal-list {
-  display:flex;
-  justify-content:flex-end;
+  display: flex;
+}
+.app-menu-horizontal-list-item {
+  padding: 0.3em 1em;
+  margin: 0 0.5em;
+}
+.app-menu-horizontal-list-item:hover {
+  background: white;
+  border: var(--border);
+}
+.app-menu-horizontal-list .selected {
+  border-bottom: 0.2rem solid rgb(136, 192, 208);
+  font-weight: bold;
 }
 .logo {
   height: 100%;
   display: flex;
-  font-size: 2em;
+  font-size: 2.5rem;
   font-weight: bold;
   align-items: center;
 }
@@ -145,9 +163,10 @@ main{
 .app-footer {
   display: flex;
   color: var(--nord3);
+  background-color: rgb(242, 244, 248);
   justify-content: center;
-  font-size: 0.8em;
-  padding: 1em;
+  font-size: 0.8rem;
+  padding: 1em 0;
   font-weight: bold;
 }
 
@@ -167,14 +186,18 @@ main{
   padding: 0 0.5em;
 }
 
-.index{
-  display: flex;
-  flex-direction: column;
+.index {
+  justify-content: space-between;
+}
+.index h1 {
+  margin-top: auto;
+  align-self: center;
 }
 .index-image {
   align-self: center;
-  width:10em;
-  margin: 10em 0;
+  width: 10em;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .index-image path {
   fill: var(--nord3);
@@ -185,9 +208,13 @@ main{
 .index-image path:nth-child(2) {
   fill: var(--nord12);
 }
+
+.index-image path:nth-child(4) {
+  fill: rgb(136, 192, 208);
+}
 .index-description {
   align-self: flex-start;
-  margin-top:8rem;
+  margin-top: 8rem;
 }
 
 .card {
@@ -341,20 +368,21 @@ main{
   display: none;
 }
 
-@media (min-width: 400px) { 
+@media screen and (min-width: 400px) {
   .app-menu-hamburger {
-    display:block;
+    display: block;
   }
- .app-menu-horizontal {
-    display:none;
+
+  .app-menu-horizontal {
+    display: none;
   }
 }
 
-@media (min-width: 850px) { 
+@media screen and (min-width: 850px) {
   .app-menu-hamburger {
-    display:none;
+    display: none;
   }
   .app-menu-horizontal {
-    display:flex;
+    display: flex;
   }
 }
