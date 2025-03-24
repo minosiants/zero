@@ -7,16 +7,13 @@ const id = (s) => (isId(s) ? s.slice(1) : s);
 const isFunc = (v) => typeof v === "function";
 
 const $$ = (d) => {
-  const element = (...s) => {
-    const res = s.reduce(
+  const element = (...s) =>
+    s.reduce(
       (acc, cur) =>
         isId(cur) ? acc?.getElementById(id(cur)) : acc?.querySelector(cur),
       d,
     );
-    console.log("element: ", res);
-    console.log("s: ", s);
-    return res;
-  };
+
   const addEvent =
     (event) =>
     (...args) => {
@@ -95,20 +92,22 @@ const $card = ($, card) => {
   const $answerInput = $.element(cardId, ".answer input");
   const $answerLine = $.element(cardId, ".answer .line");
   const $questionValue = $.element(cardId, ".question-value");
-  const $result = $.element(cardId, ".result span");
+  const $result = $.element(cardId, ".result");
+  const $resultValue = $.element(cardId, ".result-value");
   const $reloadBtn = $.element(cardId, ".action .reload");
   const $submitBtn = $.element(cardId, ".action .submit");
   const mainColor = $.cssVar("--main-card-color-default");
 
   const questionValue = () => $questonValue.textContent;
+
   const showResult = (result) => {
     const v = result
       .toString()
       .split("")
       .map((v) => `<span>${v}</span>`)
       .join("");
-    console.log(v);
-    $result.innerHTML = v;
+    $resultValue.innerHTML = v;
+    $result.style.display = "flex";
   };
 
   const showError = () => {
@@ -137,7 +136,8 @@ const $card = ($, card) => {
 
   const reload = (newValue) => {
     $questionValue.textContent = newValue;
-    $result.textContent = "";
+    $resultValue.textContent = "";
+    $result.style.display = "none";
     $answerInput.value = "";
     clearError();
     clearSuccess();
@@ -195,7 +195,6 @@ const power = () => {
 
 const hexToBin = () => {
   const id = "#hex";
-
   const check = (question, answer) => {
     const q = Number.parseInt(question, 16);
     const a = Number.parseInt(answer, 2);
@@ -219,10 +218,37 @@ const hexToBin = () => {
   };
 };
 
+const binToHex = () => {
+  const id = "#bin";
+
+  const check = (question, answer) => {
+    const q = Number.parseInt(question, 2);
+    const a = Number.parseInt(answer, 16);
+    return [Number(q).toString(16).padStart(2, 0), q === a];
+  };
+
+  const valid = (value) => {
+    const answer = Number(value);
+    return !isNaN(answer);
+  };
+  const generate = (max = 256) => {
+    const num = Math.floor(Math.random() * max);
+    return num.toString(2).padStart(8, 0);
+  };
+
+  return {
+    id: id,
+    valid: valid,
+    check: check,
+    generate: generate,
+  };
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const $ = $$(document);
   const pageId = $.element("body").id;
 
   if (pageId === "power") $card($, power());
   else if (pageId === "hex") $card($, hexToBin());
+  else if (pageId === "bin") $card($, binToHex());
 });

@@ -58,7 +58,7 @@ a:active {
   font-family: Rubik;
   padding: 0 2rem;
   min-height: 100vh;
-  min-width: 300px;
+  min-width: 350px;
   background-color: rgb(242, 244, 248);
   border: var(--border);
 }
@@ -159,8 +159,8 @@ a:active {
   justify-self: center;
   display: grid;
   grid-template-columns: repeat(1, auto);
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 330px;
+  max-width: 330px;
   color: var(--nord3);
   border-top: 0.5em solid var(--nord3);
   background: white; /*var(--nord6);*/
@@ -203,9 +203,19 @@ a:active {
   opacity: 0.3;
   font-size: 3em;
 }
+#hexToBin.card .result-prefix {
+  opacity: 0.3;
+}
 
-#hexToBin.card .result span span:nth-child(4) {
+#hexToBin.card .result-value span:nth-child(4) {
   padding-right: 1rem;
+}
+#binToHex.card .question-prefix {
+  font-size: 3em;
+  opacity: 0.3;
+}
+#binToHex.card .result-prefix {
+  opacity: 0.3;
 }
 
 .card .result {
