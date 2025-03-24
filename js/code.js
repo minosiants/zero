@@ -88,7 +88,6 @@ const $$ = (d) => {
 
 const $card = ($, card) => {
   const cardId = card.id;
-  const $navigation = $.element(".app-menu-slider");
   const $answerInput = $.element(cardId, ".answer input");
   const $answerLine = $.element(cardId, ".answer .line");
   const $questionValue = $.element(cardId, ".question-value");
@@ -165,10 +164,6 @@ const $card = ($, card) => {
     e.stopPropagation();
     reload(card.generate());
   });
-
-  $.onClick(".app-menu-hamburger-icon", () =>
-    $.toggleHeight("100vh", $navigation),
-  );
 
   reload(card.generate());
 };
@@ -247,7 +242,9 @@ const binToHex = () => {
 document.addEventListener("DOMContentLoaded", () => {
   const $ = $$(document);
   const pageId = $.element("body").id;
-
+  $.onClick(".app-menu-hamburger-icon", () =>
+    $.toggleHeight("100vh", $.element(".app-menu-slider")),
+  );
   if (pageId === "power") $card($, power());
   else if (pageId === "hex") $card($, hexToBin());
   else if (pageId === "bin") $card($, binToHex());

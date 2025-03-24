@@ -57,10 +57,13 @@ a:active {
   flex-direction: column;
   font-family: Rubik;
   padding: 0 2rem;
-  min-height: 100vh;
+  height: 100vh;
   min-width: 350px;
   background-color: rgb(242, 244, 248);
   border: var(--border);
+}
+main{
+  /* height: 100vh; */
 }
 .content-pusher {
   height: 6em;
@@ -84,6 +87,10 @@ a:active {
   padding: 0 2em;
   width: 100%;
 }
+.app-menu-hamburger {
+    display:none;
+}
+
 .app-menu-hamburger-icon {
   width: 2em;
   height: 2em;
@@ -107,10 +114,8 @@ a:active {
 .app-menu-slider-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 .app-menu-slider-list-item {
-  font-size: 1.2em;
   padding: 0.4em 0.5em;
   margin: 0.5em;
   font-size: 2em;
@@ -118,6 +123,13 @@ a:active {
 .app-menu-slider-list-item:hover {
   border-radius: 0.5em;
   background: white;
+}
+.app-menu-horizontal {
+  
+}
+.app-menu-horizontal-list {
+  display:flex;
+  justify-content:flex-end;
 }
 .logo {
   height: 100%;
@@ -155,6 +167,29 @@ a:active {
   padding: 0 0.5em;
 }
 
+.index{
+  display: flex;
+  flex-direction: column;
+}
+.index-image {
+  align-self: center;
+  width:10em;
+  margin: 10em 0;
+}
+.index-image path {
+  fill: var(--nord3);
+}
+.index-image path:nth-child(1) {
+  fill: var(--nord12);
+}
+.index-image path:nth-child(2) {
+  fill: var(--nord12);
+}
+.index-description {
+  align-self: flex-start;
+  margin-top:8rem;
+}
+
 .card {
   justify-self: center;
   display: grid;
@@ -163,8 +198,7 @@ a:active {
   max-width: 330px;
   color: var(--nord3);
   border-top: 0.5em solid var(--nord3);
-  background: white; /*var(--nord6);*/
-  /* border: var(--border); */
+  background: white;
   padding: 2em;
   border-radius: 0.5em;
   box-shadow:
@@ -305,4 +339,22 @@ a:active {
 .card footer .action .reload {
   width: 5em;
   display: none;
+}
+
+@media (min-width: 400px) { 
+  .app-menu-hamburger {
+    display:block;
+  }
+ .app-menu-horizontal {
+    display:none;
+  }
+}
+
+@media (min-width: 850px) { 
+  .app-menu-hamburger {
+    display:none;
+  }
+  .app-menu-horizontal {
+    display:flex;
+  }
 }
