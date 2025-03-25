@@ -14,7 +14,7 @@
     <script src="js/code.js"></script>
     <style></style>
   </head>
-  <body id="hex">
+  <body id="dec">
     <div class="canvas">
       <div class="content-pusher"></div>
       <header class="app-header">
@@ -36,7 +36,7 @@
               <a href="bin.html" class="app-menu-horizontal-list-item"
                 >Bin -> Hex</a
               >
-              <a href="dec.html" class="app-menu-horizontal-list-item"
+              <a href="dec.html" class="app-menu-horizontal-list-item selected"
                 >Dec -> Bin</a
               >
               <a href="bdec.html" class="app-menu-horizontal-list-item"
@@ -75,10 +75,10 @@
       </header>
 
       <main>
-        <div class="card" id="hexToBin">
-          <header>hex -> bin</header>
+        <div class="card" id="DecToBin">
+          <header>dec -> bin</header>
           <section class="question">
-            <span class="question-prefix">0x</span>
+            <span class="question-prefix"></span>
             <span class="question-value"></span>
           </section>
           <section class="result">

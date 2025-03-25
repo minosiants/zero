@@ -138,8 +138,9 @@ main {
   display: flex;
 }
 .app-menu-horizontal-list-item {
-  padding: 0.3em 1em;
+  padding: 0.3em 0.5em;
   margin: 0 0.5em;
+  border: var(--border-size) solid rgb(242, 244, 248);
 }
 .app-menu-horizontal-list-item:hover {
   background: white;
@@ -185,13 +186,16 @@ main {
 .app-footer-sep {
   padding: 0 0.5em;
 }
-
+.index .stress {
+  color: var(--nord3);
+}
 .index {
   justify-content: space-between;
 }
 .index h1 {
   margin-top: auto;
   align-self: center;
+  color: var(--nord9);
 }
 .index-image {
   align-self: center;
@@ -276,6 +280,13 @@ main {
   opacity: 0.3;
 }
 #binToHex.card .result-prefix {
+  opacity: 0.3;
+}
+#decToBin.card .result-prefix {
+  opacity: 0.3;
+}
+#binToDec.card .question-prefix {
+  font-size: 3em;
   opacity: 0.3;
 }
 
@@ -368,7 +379,7 @@ main {
   display: none;
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 20em) {
   .app-menu-hamburger {
     display: block;
   }
@@ -378,7 +389,7 @@ main {
   }
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 57em) {
   .app-menu-hamburger {
     display: none;
   }

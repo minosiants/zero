@@ -39,6 +39,16 @@ const $$ = (d) => {
 
   const onClick = addEvent("click");
   const onInput = addEvent("input");
+  const onEnter = (...args) => {
+    const [s, f] = args;
+    const a = [
+      s,
+      (e) => {
+        if (e.key === "Enter") f(e);
+      },
+    ];
+    addEvent("keydown")(...a);
+  };
   const cssVar = (name) =>
     getComputedStyle(d.documentElement).getPropertyValue(name);
 
@@ -73,6 +83,7 @@ const $$ = (d) => {
     element: element,
     onClick: onClick,
     onInput: onInput,
+    onEnter: onEnter,
     cssVar: cssVar,
     setColor: setColor,
     setBgColor: setBgColor,
@@ -142,7 +153,12 @@ const $card = ($, card) => {
     clearSuccess();
     showSubmit();
   };
-  $.onInput(cardId, ".answer .line", (e) => clearError(e));
+  $.onInput(".answer .line", (e) => {
+    clearError(e);
+  });
+  $.onEnter(".answer input", (e) => {
+    $submitBtn.dispatchEvent(new Event("click"));
+  });
 
   $.onClick(cardId, "footer .action .submit", (e) => {
     e.stopPropagation();
@@ -239,6 +255,56 @@ const binToHex = () => {
   };
 };
 
+const decToBin = () => {
+  const id = "#dec";
+  const check = (question, answer) => {
+    const q = Number.parseInt(question, 10);
+    const a = Number.parseInt(answer, 2);
+    return [Number(q).toString(2).padStart(8, "0"), q === a];
+  };
+
+  const valid = (value) => {
+    const answer = Number(value);
+    return !isNaN(answer);
+  };
+  const generate = (max = 256) => {
+    const num = Math.floor(Math.random() * max);
+    return num.toString(10);
+  };
+
+  return {
+    id: id,
+    valid: valid,
+    check: check,
+    generate: generate,
+  };
+};
+
+const binToDec = () => {
+  const id = "#bdec";
+  const check = (question, answer) => {
+    const q = Number.parseInt(question, 2);
+    const a = Number.parseInt(answer, 10);
+    return [Number(q).toString(10), q === a];
+  };
+
+  const valid = (value) => {
+    const answer = Number(value);
+    return !isNaN(answer);
+  };
+  const generate = (max = 256) => {
+    const num = Math.floor(Math.random() * max);
+    return num.toString(2).padStart(8, 0);
+  };
+
+  return {
+    id: id,
+    valid: valid,
+    check: check,
+    generate: generate,
+  };
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const $ = $$(document);
   const pageId = $.element("body").id;
@@ -248,4 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (pageId === "power") $card($, power());
   else if (pageId === "hex") $card($, hexToBin());
   else if (pageId === "bin") $card($, binToHex());
+  else if (pageId === "dec") $card($, decToBin());
+  else if (pageId === "bdec") $card($, binToDec());
 });
