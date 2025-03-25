@@ -32,10 +32,7 @@ const $$ = (d) => {
   const show = (...elements) =>
     elements.forEach((e) => (e.style.display = "block"));
 
-  const isShown = (e) => !!e.offsetParent && e.style.display !== "none";
-  const toggelShow = (...elements) => {
-    elements.forEach((e) => (isShown(e) ? hide(e) : show(e)));
-  };
+  const isShown = (e) => e.style.display !== "none";
 
   const onClick = addEvent("click");
   const onInput = addEvent("input");
@@ -77,7 +74,7 @@ const $$ = (d) => {
     elements.forEach((e) => {
       if (hasClass(clazz, e)) e.classList.remove(clazz);
     });
-
+  const event = (name) => (el) => el.dispatchEvent(new Event(name));
   return {
     doc: d,
     element: element,
@@ -89,11 +86,12 @@ const $$ = (d) => {
     setBgColor: setBgColor,
     hide: hide,
     show: show,
-    toggelShow: toggelShow,
+    isShown: isShown,
     setHeight: setHeight,
     toggleHeight: toggleHeight,
     addClass: addClass,
     removeClass: removeClass,
+    event: event,
   };
 };
 
@@ -153,11 +151,11 @@ const $card = ($, card) => {
     clearSuccess();
     showSubmit();
   };
-  $.onInput(".answer .line", (e) => {
-    clearError(e);
-  });
+
+  $.onInput(".answer .line", (e) => clearError(e));
+
   $.onEnter(".answer input", (e) => {
-    $submitBtn.dispatchEvent(new Event("click"));
+    [$submitBtn, $reloadBtn].filter($.isShown).forEach($.event("click"));
   });
 
   $.onClick(cardId, "footer .action .submit", (e) => {
